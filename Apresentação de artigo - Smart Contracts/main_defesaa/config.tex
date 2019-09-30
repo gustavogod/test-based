@@ -1,0 +1,61 @@
+\newcommand{\CL}{$\mathcal{CL}$\xspace}
+%\newcommand{\CLR}{$\mathcal{CL}$ Relativizada\xspace}
+\newcommand{\RCL}{$\mathcal{RCL}$\xspace}
+\newcommand{\RECALL}{$\mathcal{RECALL}$\xspace}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\makeatletter
+\newcommand{\miniscule}{\@setfontsize\miniscule{5}{6}}% \tiny: 5/6
+\makeatother
+
+\tikzstyle{tech} = [rectangle, draw, text width=7em, text centered]
+\tikzstyle{obj} = [rectangle, draw, text width=5em, text centered, rounded corners,  fill=blue!60]  
+\tikzstyle{final-logic} = [ellipse, draw, text width=9em, text centered, rounded corners, fill=blue!60]    
+\tikzstyle{final-obj} = [rectangle, draw, text width=9em, text centered, rounded corners, fill=blue!60]    
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{logic} = [draw, ellipse, text centered]
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\lstset{
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+	basicstyle=\scriptsize,          % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	columns=flexible,
+    deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	frame=none,	                     % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code
+	language=Java,                   % the language of the code
+	otherkeywords={*,...},           % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=15pt,                  % how far the line-numbers are from the code
+	numberstyle=\tiny,               % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	tabsize=1	                     % sets default tabsize to 2 spaces
+}
+
+\lstdefinelanguage{rcl}{
+    keywords=[1]{ O, P, F,CONFLICT,Trace,Stacktrace, AND, \^},
+}
+
+\lstdefinestyle{rcl}{
+    basicstyle=\normalsize,
+    numbers=left,
+    numberstyle=\normalsize,
+    numbersep=5pt,
+    frame=lines,
+    breaklines=true,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    showstringspaces=false,
+    upquote=true,
+    tabsize=1,
+}

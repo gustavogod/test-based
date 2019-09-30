@@ -1,0 +1,477 @@
+\documentclass[12pt,xcolor={usenames,dvipsnames}]{beamer}
+\usetheme{Hannover}
+\setbeamertemplate{footline}[frame number]
+\usecolortheme{crane}
+\useinnertheme{rectangles}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{tipa}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{bbold}
+\usepackage{latexsym}
+\usepackage{ae}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{dsfont}
+\usepackage{textcomp}
+\usepackage{cmll}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{upgreek}
+\usepackage[portuguese]{algorithm2e}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{multicol}
+\usetikzlibrary{shapes,arrows,automata,positioning}
+\usepackage{stmaryrd}
+\input{config}
+
+% IMPORTANTE>>> Qualificação: Quarta(16/09/2015) às 15h na sala 311.
+% IMPORTANTE>>> Defesa: Quarta(21/09/2016) às 10h na sala 318.
+
+\title[\miniscule{Monitoramento Reativo de Protocolos em Sistemas IoT Sobre o MQTT}]{\textbf{MONITORAMENTO REATIVO DE PROTOCOLOS EM SISTEMAS IOT SOBRE O MQTT}}
+\subtitle{}
+\author[Gustavo Oliveira Dias] {\textbf{Gustavo Oliveira Dias}}
+\institute[CCT-UENP]{Universidade Estadual do Norte do Paraná\\Bacharelado em Ciência da Computação\\\textbf{Orientador: Prof. Me. Wellington Aparecido Della Mura}}
+\date[24 de novembro de 2017]{Banca de Defesa do Trabalho de Conclusão de Curso \\ 24 de novembro de 2017}
+\subject{Banca de Defesa do Trabalho de Conclusão de Curso - Monitoramento reativo de protocolos em sistemas IoT sobre o MQTT}
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}{Roteiro da Apresentação}
+    \begin{enumerate}
+        \item Motivação;
+        \item Formulação e escopo do problema;
+        \item Objetivos;
+        \item Método proposto;
+        \item Estudo de Caso;
+        \item Conclusão;
+    \end{enumerate}
+\end{frame}
+
+\section{Motivação do Trabalho}
+\subsection{IoT}
+\begin{frame}{Motivação - IoT}
+\begin{beamerboxesrounded}{O que é Internet das Coisas?}
+	Aplicações que \textbf{armazenam} e \textbf{processam} dados que \\ \textbf{representam virtualmente} objetos do mundo físico, \\ provendo \textbf{interação} e \textbf{comunicação} entre dispositivos \textbf{heterogêneos} conectados.
+\end{beamerboxesrounded}
+\begin{itemize}
+	\item Em 2011, movimentou cerca de US\$44 bi;
+	\item Crescimento previsto em US\$290 bi para 2017;
+	\item Até 2020, haverá em torno de 34 bi de dispositivos.
+	%\item \textbf{Desafio:} lidar com a \textbf{comunicação} entre tantos dispositivos.
+	% sensores, dispositivos de rede sem fio, serviços de armazenamento em nuvem, entre outros serviços e dispositivos que compõem este ambiente tecnológico
+\end{itemize}
+\begin{beamerboxesrounded}{}
+\textbf{Desafio:} lidar com a \textbf{comunicação} entre tantos \\ dispositivos conectados.
+\end{beamerboxesrounded}
+\end{frame}
+
+\subsection{Protocolos}
+\begin{frame}{Motivação - Protocolos}
+\begin{beamerboxesrounded}{Protocolos de comunicação}
+	Conjunto de \textbf{regras-padrão} para \textbf{transmissão de \\ informação} entre computadores.
+	\begin{itemize}
+		\item Formato;
+		\item Sincronização;
+		\item Sequência;
+		\item Detecção de erros e falhas.
+	\end{itemize}
+\end{beamerboxesrounded}
+\end{frame}
+
+\subsection{MQTT}
+\begin{frame}{Motivação - MQTT}
+\begin{beamerboxesrounded}{MQTT (\textit{Message Queue Telemetry Transport protocol})}
+	Ideal para dispositivos com \textbf{baixo poder de \\ processamento} em ambientes com \textbf{largura de \\ banda limitada}.
+\end{beamerboxesrounded}
+\textbf{Características}:
+\begin{itemize}
+	\item Utiliza TCP;
+	\item Cabeçalho de apenas 2 bytes;
+	\item Estratégia \textit{publish/subscribe};
+	\item Clientes se inscrevem em tópicos;
+	\item Implementa um servidor próprio: \textit{broker}.
+		\item 3 níveis de \textit{Quality of Service} (QoS);
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Motivação - Protocolos IoT}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=10cm]{./figuras/protocolo_diagrama.png}
+\end{figure}    
+\end{frame}
+
+\section{Formulação e escopo do problema}
+\begin{frame}{Motivação}
+\begin{alertblock}{}
+É possível \textbf{detectar} e \textbf{identificar} o responsável por uma \textbf{violação} do protocolo?
+\end{alertblock}
+\quad
+\begin{alertblock}{}
+	Os protocolos IoT podem ser \textbf{modelados} por meio de \textbf{formalismos}?
+\end{alertblock}
+
+\end{frame}
+
+\subsection{Estrutura}
+\begin{frame}{Estrutura}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=9cm]{./figuras/tcc_estrutura.png}
+\end{figure}  
+\end{frame}
+
+\section{Objetivos}
+\begin{frame}{Objetivos}
+
+\begin{beamerboxesrounded}{Objetivo geral}
+Mecanismo para \textbf{formalização} e \textbf{monitoramento \\
+	reativo} de sistemas de IoT que utilizam o \\protocolo \textbf{MQTT}.
+\end{beamerboxesrounded}
+Objetivos específicos:
+\begin{itemize}
+	\item Definir \textbf{métodos} para representação de protocolos em \textbf{contratos multilaterais} a partir do \textbf{modelo} descrito em \textbf{TPi};
+	\item Representar o modelo em TPi do MQTT como um \textbf{contrato multilateral};
+	\item Aplicar o algoritmo de monitoramento a um estudo de caso real.
+\end{itemize}
+\end{frame}
+
+\section{Método Proposto}
+\subsection{TPi}
+\begin{frame}{Representação formal - TPi}
+\begin{beamerboxesrounded}{O que é o TPi?}
+	Uma linguagem temporal para modelagem de processos.
+\end{beamerboxesrounded}
+\begin{align}
+&\textbf{QoS~nível~0}~"(At~most~once)":~ \nonumber \\
+&\quad Cliente(Publish)~|~Servidor()~|~ClienteSub(),~em~que: \nonumber \\
+&\quad Cliente(z) \stackrel{def}{=} \overline{c}\langle z \rangle \nonumber \\
+&\quad Servidor() \stackrel{def}{=} c(x).\overline{pub}\langle x \rangle \nonumber \\
+&\quad ClienteSub() \stackrel{def}{=} pub(y) \nonumber
+\end{align}      
+\end{frame}
+
+\subsection{Contratos multilaterais}
+\begin{frame}{Contratos multilaterais}
+\begin{beamerboxesrounded}{}
+	Acordo entre duas ou mais partes baseado em\\ \textbf{compromissos mútuos}.
+\end{beamerboxesrounded}
+Composto por:
+\begin{itemize}
+	\item \textbf{Ação:} o que cada parte deverá fazer;
+	$$(A\_QoS0enviarPublish, C, S, ?)$$
+	\item \textbf{Compromisso:} garantia de cumprimento das ações entre as partes envolvidas;
+\end{itemize}	
+	\begin{align}
+	& c = (C\_QoS0delivery,C,CS,4, \nonumber \\
+	& \{ (A\_QoS0enviarPublish,tr), (A\_QoS0receberPublish,fi), \nonumber \\
+	& (A\_QoS0publicarPacote,tr), (A\_QoS0receberPacote,fi) \nonumber
+	\end{align}
+\begin{itemize}	
+	\item \textbf{Grafo de compromisso:} forma de visualizar os compromissos entre as partes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{QoS 0 - "\textit{At most once}"}
+
+\begin{beamerboxesrounded}{}
+	A comunicação baseia-se em um \textit{broker} \textbf{recebendo} e \\\textbf{publicando} mensagens.
+\end{beamerboxesrounded}
+
+\begin{table}[!ht]
+	\centering\tiny{
+		\begin{tabular}{|l|l|l|l|}
+			\hline
+			\multicolumn{1}{|c|}{\multirow{2}{*}{\textbf{Compromissos}}} & \multicolumn{2}{c|}{\textbf{Classificação das ações e compromissos}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{Rótulos}}} \\ \cline{2-3}
+			\multicolumn{1}{|c|}{}                                       & \multicolumn{1}{c|}{$tr$}    & \multicolumn{1}{c|}{$fi$}    & \multicolumn{1}{c|}{}                                  \\ \hline
+			$C\_QoS0delivery$                                            & $A\_QoS0enviarPublish$       &                              & $Q0,1$                                                 \\ \cline{2-4} 
+			\multicolumn{1}{|c|}{$(Q0)$}                                 &                              & $A\_QoS0receberPublish$      & $Q0,2$                                                 \\ \cline{2-4} 
+			& $A\_QoS0publicarPacote$      &                              & $Q0,3$                                                 \\ \cline{2-4} 
+			&                              & $A\_QoS0receberPacote$       & $Q0,4$                                                 \\ \hline
+		\end{tabular}
+	}
+\end{table}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=9cm]{./figuras/qos0_grafo.png}
+\end{figure} 
+
+\end{frame}
+
+\section{Estudo de caso}
+\begin{frame}{Estudo de caso}
+\begin{beamerboxesrounded}{}
+	Sistema IoT de \textbf{detecção} e \textbf{supressão} de incêndio.
+\end{beamerboxesrounded}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=7cm]{./figuras/diagrama_estudo.png}
+\end{figure} 
+\end{frame}
+
+\begin{frame}{Estudo de caso}
+\begin{table}[!ht]
+	\centering\tiny{
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			%\rowcolor[HTML]{FFFFFF} 
+			{\color[HTML]{000000} \textbf{Mensagem}}                             & {\color[HTML]{000000} \textbf{Tópico MQTT}} & {\color[HTML]{000000} \textit{\textbf{Publisher}}} & {\color[HTML]{000000} \textit{\textbf{Subscriber}}} & {\color[HTML]{000000} \textbf{Ação do \textit{subscriber}}} \\ \hline
+			\textit{\begin{tabular}[c]{@{}c@{}}Fire\\ Detection\end{tabular}}    & \textit{Fire/Detected}                      & Sensor de incêndio                                 & \textit{App}                                        & Exibir notificação                                 \\ \hline
+			\textit{\begin{tabular}[c]{@{}c@{}}Sprinkler\\ Request\end{tabular}} & \textit{Sprinkler/StReq}                    & \textit{App}                                       & \textit{Sprinkler}                                  & Ler status                                         \\ \hline
+			\textit{\begin{tabular}[c]{@{}c@{}}Sprinkler\\ Reply\end{tabular}}   & \textit{Sprinkler/StRep}                    & \textit{Sprinkler}                                 & \textit{App}                                        & Enviar mensagem                                    \\ \hline
+			\textit{\begin{tabular}[c]{@{}c@{}}Sprinkler\\ Start\end{tabular}}   & \textit{Sprinkler/Start}                    & \textit{App}                                       & \textit{Sprinkler}                                  & Ativar \textit{sprinkler}                                   \\ \hline
+			\textit{\begin{tabular}[c]{@{}c@{}}Sprinkler\\ Start\end{tabular}}   & \textit{Sprinkler/Start}                    & Sensor de incêndio                                 & \textit{Sprinkler}                                  & Ativar \textit{sprinkler}                                   \\ \hline
+		\end{tabular}
+	}
+\end{table}
+\end{frame}
+
+\begin{frame}{Estudo de caso}
+	\begin{beamerboxesrounded}{O sistema é baseado em três processos, que são \\ \textbf{modelados} e convertidos em um \textbf{contrato}.}
+		\begin{itemize}
+			\item Detecção/Alerta;
+			\item Checagem;
+			\item Supressão;
+		\end{itemize}
+	\end{beamerboxesrounded}
+	\begin{itemize}
+		\item O \textbf{aplicativo} assume o papél $\textbf{Ap}$ durante a detecção/alerta e checagem, e recebe o papel $\textbf{Ap'}$ no compromisso de supressão;
+		\item Os agentes \textbf{broker}, \textbf{sprinkler} e \textbf{sensor} assumem os papéis $\textbf{Br}$, $\textbf{Sp}$ e $\textbf{S}$, respectivamente.
+	\end{itemize}
+\end{frame}
+
+\subsection{Modelagem e conversão}
+\begin{frame}{Estudo de caso - Modelo para Detecção/Alerta}
+\begin{align}
+& Sensor(FireDetection)~|~Broker()~|~App()~|~Sprinkler(): \nonumber \\
+& Sensor(z) \stackrel{def}{=} \overline{fd}\langle z \rangle \nonumber \\
+& Broker() \stackrel{def}{=} fd(x).\overline{fd'}\langle x \rangle \nonumber \\
+& App() \stackrel{def}{=} fd'(y) \nonumber \\
+& Sprinkler() \stackrel{def}{=} fd'(y') \nonumber
+\end{align}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Conversão do modelo de Detecção/Alerta}
+
+\begin{eqnarray}
+Conjunto~de~\textbf{ações}:~\{ &(\overline{fd}\langle z \rangle, S, Br, ?),& \nonumber \\
+&(fd(x), Br, Br, ?),& \nonumber \\
+&(\overline{fd'}\langle x \rangle, Br, Ap, ?),& \nonumber \\
+&(fd'(y), Ap, Ap, ?),& \nonumber \\
+&(\overline{fd'2}\langle x \rangle, Br, Sp, ?),& \nonumber \\
+&(fd'2(y'), Sp, Sp, ?) \}& \nonumber 
+\end{eqnarray}
+
+Compromisso:
+\begin{align}
+& m_{1} = (C\_detectarIncendio, Sensor, Sprinkler, 6, \nonumber \\
+& \{ (\overline{fd}\langle z \rangle, tr), (fd(x), fi), (\overline{fd'}\langle x \rangle, tr), (fd'(y), fi), \nonumber \\ &(\overline{fd'2}\langle x \rangle, tr), (fd'2(y'), fi)~\}) \nonumber
+\end{align}
+
+\end{frame}
+
+\begin{frame}{Estudo de caso - Conversão do modelo de Detecção/Alerta}
+	\begin{enumerate}
+		\item Atribuir um nome ao compromisso;
+		$$name = C\_detectarIncendio$$
+		\item Definir o agente e a mensagem que dão início ao processo;
+		$$P_{ini} = (Sensor, FireDetection)$$
+		\item Identificar todos os agentes.
+		$$\mathcal{P} = \{Sensor, Broker, App, Sprinkler\}$$
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Conversão do modelo de Detecção/Alerta}
+\begin{enumerate}
+	\setcounter{enumi}{3}
+	\item Agrupar duplas compostas por cada agente e sua definição;
+	\begin{align}
+	&\mathcal{D} = \{(Sensor, \{\overline{fd}\langle z \rangle\}), \nonumber \\
+	& (App, \{fd'(y)\}), (Sprinkler, \{fd'(y')\})\} \nonumber
+	\end{align}
+	\item Identificar a ordem de execução das ações.
+\end{enumerate}
+\begin{align}
+&\mathcal{A} = \{(\overline{fd}\langle z \rangle, Sensor), (fd(x), Broker), (\overline{fd'}\langle x \rangle, Broker), \nonumber \\ 
+&(fd'(y), App), (fd'(y'), Sprinkler)\} \nonumber
+\end{align}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Conversão do modelo de Detecção/Alerta}
+
+\begin{itemize}
+	\item Quando uma mensagem é publicada para mais de um inscrito, então novas ações de saída são adicionadas;
+	\item Ações de entrada podem ser modificadas.
+\end{itemize}
+
+\begin{eqnarray}
+Conjunto~de~\textbf{ações}:~\{ &(\overline{fd}\langle z \rangle, S, Br, ?),& \nonumber \\
+&(fd(x), Br, Br, ?),& \nonumber \\
+&(\overline{fd'}\langle x \rangle, Br, Ap, ?),& \nonumber \\
+&(fd'(y), Ap, Ap, ?),& \nonumber \\
+&(\overline{fd'2}\langle x \rangle, Br, Sp, ?),& \nonumber \\
+&(fd'2(y'), Sp, Sp, ?) \}& \nonumber 
+\end{eqnarray}
+
+\end{frame}
+
+\begin{frame}{Estudo de caso - Conversão do modelo de Detecção/Alerta}
+\begin{itemize}
+	\item O agente contido em $P_{ini} = (Sensor, FireDetection)$ é o \textbf{expedidor} do compromisso;
+	\item O agente que envia a última ação é o \textbf{recebedor};
+	\item Ações de saída são do tipo $\textit{\textbf{trigger}}$ e ações de entrada são do tipo \textbf{finish\textit{}}.
+\end{itemize}
+Compromisso:
+\begin{align}
+& m_{1} = (C\_detectarIncendio, Sensor, Sprinkler, 6, \nonumber \\
+& \{ (\overline{fd}\langle z \rangle, tr), (fd(x), fi), (\overline{fd'}\langle x \rangle, tr), (fd'(y), fi), \nonumber \\ &(\overline{fd'2}\langle x \rangle, tr), (fd'2(y'), fi)~\}) \nonumber
+\end{align}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Tabela de compromisso}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=9cm]{./figuras/tabela_estudo.png}
+\end{figure} 
+\end{frame}
+
+\begin{frame}{Estudo de caso - Grafo de compromisso}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=6cm]{./figuras/estudo_grafo.png}
+\end{figure} 
+$ordercommitment = \{ (m_{2}), (m_{1} \cdot m_{2}), (m_{1} \cdot m_{2} \cdot m_{3}) \}$
+\end{frame}
+
+\begin{frame}{Estudo de caso - Cenário da violação}
+	\begin{itemize}
+		\item Um incêndio foi detectado pelo sensor;
+		\item O aplicativo verificou que o status do \textit{sprinkler} consta como  \textbf{desativado};
+		\item O compromisso de Supressão é disparado;
+		\item Porém, o \textit{sprinkler} continua \textbf{desativado}.
+	\end{itemize}
+\end{frame}
+
+\subsection{Aplicação do algoritmo}
+\begin{frame}{Estudo de caso - Aplicação do algoritmo}
+\begin{enumerate}
+	\item Entradas:
+		\begin{itemize}
+			\item Contrato;
+			\item Ação perdida: $a_{miss} = A\_receberAtivacao(SI_{2})$
+			\item Última ação feita: $a_{done} = A\_publicarAtivacao(SI_{1})$
+		\end{itemize}
+	\item Localizar todas as ações que \textbf{não ocorreram} após a violação;
+	$$E_{not\_occur} = \{SI_{3}, SI_{4}\}$$
+	\item Encontrar todas as ações que \textbf{ocorreram} antes da violação;
+	\begin{align}
+	& E_{cut} = \{ DI_{1}, DI_{2}, DI_{3}, DI_{4}, DI_{5}, DI_{6}, CS_{1}, CS_{2}, \nonumber \\
+	& CS_{3}, CS_{4}, CS_{5}, CS_{6}, CS_{7}, CS_{8} \}\nonumber
+	\end{align}
+	\item Montar o grafo restruturado.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Grafo restruturado}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=7.7cm]{./figuras/grafo_final.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Detecção do responsável}
+\begin{itemize}
+	\item Se a mensagem \textit{"StartSprinkler"} enviada por $Ap'$ ao $Br$ ($SI, 1$) estiver incorreta, então $\textbf{Ap'}$ é o responsável;  
+\end{itemize}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=6cm]{./figuras/grafo_final.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Detecção do responsável}
+\begin{itemize}
+	\item Caso contrário, a mensagem direcionada por $Br$ ao $Sp$ é verificada; 
+	\item Se estiver incorreta, então $\textbf{Br}$ é o responsável;
+\end{itemize}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=6cm]{./figuras/grafo_final.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Estudo de caso - Detecção do responsável}
+\begin{itemize}
+	\item Se não, o responsável é o papel $\textbf{Sp}$.  
+\end{itemize}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=6cm]{./figuras/grafo_final.png}
+\end{figure}
+\end{frame}
+
+\section{Conclusão}
+\begin{frame}{Conclusão}
+\begin{itemize}
+	\item Proposta: método para monitoramento reativo de protocolos IoT sobre o MQTT;
+	\item É importante que violações sejam detectadas, assim como localizar o responsável;
+	\item A solução proposta consiste em:
+		\begin{enumerate}
+			\item Descrever o modelo por meio do TPi;
+			\item Desenvolver um método de conversão para representação em contrato multilateral;
+			\item Aplicar o algoritmo de monitoramento;
+		\end{enumerate}
+	\item O que foi feito: 
+		\begin{enumerate}
+			\item Aplicação da proposta para comunicação QoS 0.
+		\end{enumerate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Conclusão}
+	\begin{itemize}
+		\item Questões pendentes:
+			\begin{enumerate}
+				\item Representação em TPi dos papéis, suas propriedades;
+				\item Representação das ordens de execução dos compromissos;
+			\end{enumerate}
+	\end{itemize}
+	Trabalhos futuros:
+	\begin{itemize}
+		\item Determinar meios para representação em TPi das propriedades pendentes;
+		\item Adaptar o método de conversão para casos mais complexos;
+		\item Estender o método proposto para os níveis 1 e 2 de QoS;
+		\item Desenvolver um \textbf{broker} MQTT para implemente o monitoramento reativo.
+	\end{itemize}
+\end{frame}
+
+\frame{\titlepage}
+
+\begin{frame}{QoS Níveis 1 e 2}
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=8cm]{./figuras/mqtt_model.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Sintaxe do TPi}
+		\begin{figure}[ht]
+		\centering
+		\includegraphics[width=8cm]{./figuras/tpi_syntax.png}
+	\end{figure}
+\end{frame}
+
+%\input{adicionais}
+
+\end{document}

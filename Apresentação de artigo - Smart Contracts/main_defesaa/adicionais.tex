@@ -1,0 +1,754 @@
+
+\begin{frame}
+    \vfill
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+        \usebeamerfont{title}Adicionais
+    \end{beamercolorbox}
+    \vfill
+\end{frame}
+
+\section{Fundamentação Teórica}
+
+\subsection{Lógica Deôntica}
+\begin{frame}{Lógica Deôntica}
+    \begin{itemize}
+        \item A Lógica Deôntica Padrão (SDL) é a variação mais utilizada.
+        \item Representa conceitos normativos legais e éticos.
+        \item Uma norma pode definir direitos, deveres, e proibições.
+        \item As normas podem ser:
+        \begin{enumerate}
+            \item Obrigação de executar uma ação - $O(\alpha)$.
+            \item Permissão para executar uma ação - $P(\alpha)$.
+            \item Proibição para executar uma ação - $F(\alpha)$.
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\section{Trabalhos Relacionados}
+%\subsection{Detecção de conflitos - Fenech}
+%\begin{frame}{Algoritmo para detecção de conflitos}
+%	O algoritmo consiste nas seguintes etapas:
+%	\begin{itemize}
+%		\item Criação de um autômato que representa o contrato
+%		\begin{enumerate}
+%			\item O estado inicial representa o contrato completo
+%			\item São criadas transições com todas as ações possíveis
+%			\item O autômato possui dois estados importantes: {\color{red}$V$} e {\color{OliveGreen}$Sat$}
+%		\end{enumerate}
+%		\item Busca por conflitos nos estados do autômato
+%		\begin{enumerate}
+%			\item Cada estado contém \textbf{informações deônticas} do contrato
+%			\item Caso exista conflito entre essas informações, \textbf{o contrato está em conflito}
+%		\end{enumerate}
+%	\end{itemize}
+%	
+%\end{frame}
+%
+%\begin{frame}{Exemplo do Algoritmo}
+%	\begin{block}{}
+%		Considere o contrato $[a]O(b) \wedge [b]F(b)$ e o autômato resultante:
+%	\end{block}
+%	\begin{figure}[ht]
+%		\centering
+%		\includegraphics[width=6cm]{./figuras/exemplo}
+%	\end{figure}
+%\end{frame}
+
+\subsection{Lógica Deôntica Relativizada}
+
+\begin{frame}{Lógica Deôntica Relativizada}
+	\begin{itemize}
+		\item Na SDL as expressões são escritas sem revelar os indivíduos.
+		\item A expressão $O(a)$ não indica quem deve executar a ação.
+		\item Esta impessoalidade torna limitada o uso da SDL em contratos.
+		\item A \textbf{Lógica Deôntica Relativizada}, representa qual indivíduo está presente na sentença.
+		\item A relativização pode gerar:
+		\begin{enumerate}
+			\item Obrigação pessoal
+			\item Obrigação geral
+			\item Obrigação impessoal
+			\item Obrigação direcionada
+		\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Lógica Deôntica Relativizada - Herrestad e Krogh}
+    \begin{itemize}
+        \item Na SDL as expressões são escritas sem revelar os indivíduos (limita seu uso em contratos).
+        \item A expressão $O(\alpha)$ não indica quem deve executar a ação.
+        \item A \textbf{Lógica Deôntica Relativizada}, representa qual indivíduo está presente na sentença (identificados por $i \in I$).
+        \item A sentença $_iO(\alpha)$ indica que $i$ é obrigado a executar a ação $\alpha$.
+        \item \textbf{Operadores Relativizados:} $_iO(\alpha), \ _iP(\alpha), \ _iF(\alpha)$.
+        \item A fórmula $_iO_j(\alpha)$ expressa que $i$ é obrigado a executar a ação $\alpha$ para $j$, com $i,j \in I$ (Executor e Recebedor da ação).
+        \item \textbf{Operadores Direcionados:} $_iO_j(\alpha), \ _iP_j(\alpha), \ _iF_j(\alpha)$.
+        \item \textbf{Modalidade Geral:} $O(\alpha) \iff \forall i \in I \ _iO(\alpha)$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Operadores deônticos relativizados}
+	\begin{itemize}
+		\item Nesta abordagem os indivíduos são identificados por $i \in I$.
+		\item A sentença $_iO(a)$ indica que o indivíduo $i$ é obrigado a executar a ação $a$.
+		\item O mesmo ocorre com:
+		\begin{itemize}
+			\item Permissão relativizada: $_iP(a) \equiv \neg \mbox{ } _iO(\neg a)$ 
+			\item Proibição relativizada: $_iF(a) \equiv \mbox{ } _iO(\neg a)$.
+		\end{itemize} 
+		\item Obrigação e permissão geral: $\forall i \in I\mbox{ }_iO(p) \mbox{ e } \forall i \in I\mbox{ }_iP(p)$;
+		\item Obrigação e permissão impessoal: $\exists i \in I\mbox{ }_iO(p) \mbox{ e } \exists i \in I\mbox{ }_iP(p)$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Operadores deônticos direcionados}
+	\begin{itemize}
+		\item Em certos contratos é importante definir o portador da obrigação e o requerente (ou contra-parte).
+		\item Indicar o responsável pela ação e quem vai receber esta ação.
+		\item A fórmula $_iO_j(a)$ expressa que $i$ é obrigado a executar a ação $a$ para $j$, tal que $i,j \in I$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Sintaxe da $\mathcal{CL}$}
+    \begin{itemize}
+        \item As expressões são baseadas em \textbf{ações atômicas}.
+        \item Os indivíduos são incorporados apenas nas ações e \underline{não podem ser representados pela linguagem}.
+    \end{itemize}
+    \begin{block}{A sintaxe da linguagem}
+        \centering
+        \begin{tabular}{rll}
+            $\mathcal{C}$ & $:=$ & $\phi \mid O_\mathcal{C}(\alpha) \mid P(\alpha) \mid F_\mathcal{C}(\alpha) \mid \mathcal{C} \to \mathcal{C} \mid [\delta]\mathcal{C} \mid \perp $\\
+            $\alpha$ & $:=$ & $ a \mid \textbf{0} \mid \textbf{1} \mid \alpha \times \alpha \mid \alpha \cdot \alpha \mid \alpha + \alpha$ \\
+            $\delta$ & $:=$ & $ a \mid \textbf{0} \mid \textbf{1} \mid \delta \times \delta \mid \delta \cdot \delta \mid \delta + \delta \mid \delta^* \mid \varphi?$ \\
+            $\varphi$ & $:=$ & $ \phi \mid \textbf{0} \mid \textbf{1} \mid \varphi \vee \varphi \mid \varphi \wedge \varphi \mid \neg \varphi$ \\
+        \end{tabular}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Semântica da $\mathcal{CL}$}
+\begin{itemize}
+\item Semântica de \textit{traces}: sequência de ações que respeita o contrato
+\item Um \textit{trace} $\sigma$ é uma sequência ordenada de ações
+ dada por $a_0, a_1, \dots$, onde $a_i \in \mathcal{A}^\&_\mathcal{B}$, $i\geq 0$.
+\item Se o \textit{trace} $\sigma$ satisfaz contrato $\mathcal{C}$, então  $\sigma \models \mathcal{C}$
+\item Se o \textit{trace} $\sigma$ viola o contrato, então $\sigma \not \models \mathcal{C}$
+\end{itemize}
+
+\begin{block}{Exemplo}
+\begin{center}
+{\footnotesize 
+Se o cliente exceder o limite de banda da internet ele deve pagar uma multa, ou 
+ deve atrasar o pagamento e notificar o provedor. Senão, ele paga o dobro.
+ }
+\end{center}
+$$ \mathcal{C} = [exceder]O_{O_{\perp}(pagar\cdot pagar)}(pagar + atrasar \times notificar)$$ 
+$$ \sigma = \langle exceder, atrasar, pagar\cdot pagar \rangle $$
+\end{block}
+\end{frame}
+
+\begin{frame}{Semântica para detecção de conflitos}
+\begin{itemize}
+\item A semântica (de \textit{traces}) descreve quais condições respeitam os operadores da $\mathcal{CL}$.
+\item $\sigma$ é uma \textbf{sequência de ações} que satisfazem o contrato
+\item $\sigma_d$ contém as \textbf{informações deônticas do contrato} 
+\item Seja $\mathcal{C} = [a]O(b)\wedge[b]F(b)$, um dos \textit{traces} que satisfazem $\mathcal{C}$:
+$$\sigma = [\{a\}, \{b\}, \{b\}]$$
+$$\sigma_d = [\ \emptyset\ , \{O_b\},\ \emptyset \ ]$$
+\item Esta situação pode ser representada por $\sigma,\sigma_d\models\mathcal{C}$.
+\item Os \textit{traces} levam a uma situação de conflito:
+\[\sigma = [\{a\times b\},\emptyset,\emptyset]\] 
+\[\sigma_d = [\emptyset, \{\{O_b\},\{F_b\}\},\emptyset]\]
+\item Levam a uma situação onde não é possível satisfazer o contrato.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algoritmo para detecção de conflitos}
+O algoritmo consiste nas seguintes etapas:
+\begin{itemize}
+\item Criação de um autômato que representa o contrato
+	\begin{enumerate}
+	\item O estado inicial representa o contrato completo
+	\item São criadas transições com todas as ações possíveis
+	\item O autômato possui dois estados importantes: {\color{red}$V$} e {\color{OliveGreen}$Sat$}
+	\end{enumerate}
+\item Busca por conflitos nos estados do autômato
+	\begin{enumerate}
+	\item Cada estado contém \textbf{informações deônticas} do contrato
+	\item Caso exista conflito entre essas informações, \textbf{o contrato está em conflito}
+	\end{enumerate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Algoritmo para detecção de conflitos}
+\begin{block}{}
+Considere o contrato $[a]O(b) \wedge [b]F(b)$ e o autômato resultante:
+\end{block}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=6cm]{./figuras/exemplo}
+\end{figure}
+\end{frame}
+
+
+
+
+\section{Método proposto}
+
+
+\begin{frame}{Sintaxe da $\mathcal{RCL}$}
+    \begin{block}{}
+        \centering
+        \begin{tabular}{l}
+            $\mathcal{C}::=\mathcal{C}_O \mid \mathcal{C}_P \mid \mathcal{C}_F \mid \mathcal{C} \wedge \mathcal{C} \mid \mathcal{C}_D\mid\top \mid\  \perp$\\\quad\\
+            $\mathcal{C}_O::= O_\mathcal{C}(\alpha) \mid\ _iO_\mathcal{C}(\alpha) \mid \ _{i \curvearrowright  j}O_\mathcal{C}(\alpha) \mid \mathcal{C}_O \oplus \mathcal{C}_O$\\
+            $\mathcal{C}_P::= P(\alpha) \mid \ _iP(\alpha) \mid \ _{i \curvearrowright  j}P(\alpha) \mid \mathcal{C}_P \oplus \mathcal{C}_P$\\
+            $\mathcal{C}_F::=F_\mathcal{C}(\alpha) \mid \ _iF_\mathcal{C}(\alpha) \mid \ _{i \curvearrowright  j}F_\mathcal{C}(\alpha) \mid \mathcal{C}_F \vee \mathcal{C}_D \mathcal{C}_F$\\
+            $\mathcal{C}_D ::=[\beta]\mathcal{C} \mid \ _i[\beta]\mathcal{C} \mid \ _{i \curvearrowright  j}[\beta]\mathcal{C}_D$\\\quad\\
+            $\alpha::= 0 \mid 1 \mid a \mid \alpha \times \alpha \mid \alpha \cdot \alpha \mid \alpha + \alpha$\\
+            $\beta::=  0 \mid 1 \mid a \mid \beta \times \beta \mid \beta \cdot \beta \mid \beta + \beta \mid \overline{\beta}  \mid \beta^*$
+        \end{tabular}
+    \end{block}
+\end{frame}
+
+
+
+%\begin{frame}{Semântica $\mathcal{RCL}$}
+%    \begin{itemize}
+%        \item \textit{Trace}: \textbf{sequência de ações} executadas no contrato.
+%        \item A semântica é baseada em  \textbf{\textit{trace} de ações} e \textbf{\textit{trace} deôntico}
+%        \item Ação Relativizada: $a_r = \langle i, \alpha, j\rangle$
+%        \item Todas as ações: $\mathcal{A}_r = \{\mathcal{I} \times \mathcal{A_B} \times \mathcal{I}\}$\\
+%        \item Representações deônticas: $\mathcal{M} = \{O_{\alpha},\  _{i}O_{\alpha},\ _{j\curvearrowright i}O_{\alpha},\dots\}$
+%        
+%        \item A semântica é baseada em dois \textit{traces}:
+%        \begin{itemize}
+%            \item \textit{trace} de ações ($\sigma: \mathbb{N} \to 2^{\mathcal{A}_r}$)
+%            \item \textit{trace} deôntico ($\sigma_d: \mathbb{N} \to 2^\mathcal{M}$)
+%        \end{itemize}
+%    \end{itemize}
+%    \begin{block}{Exemplo}
+%        $\mathcal{C} =\ _{c \curvearrowright v}O(pagar)\ \wedge\ _{c \curvearrowright v}[pagar]\ _{v \curvearrowright c}O(entregar)$
+%        
+%        \begin{itemize}
+%            \item $\sigma = \langle \{(c,pagar,v)\}, \{(v,entregar,c)\}\rangle$
+%            \item $\sigma_d = \langle\{_{c\curvearrowright v}O_{pagar} \}, \{_{v\curvearrowright c}O_{entregar} \} \rangle$
+%        \end{itemize}
+%    \end{block}
+%\end{frame}
+%
+%\begin{frame}{Semântica Relativizada da $\mathcal{CL}$ - Satisfação}
+%    \begin{itemize}
+%        \item Definir  $\sigma, \sigma_d \models \mathcal{C}$, ou seja, se o \textit{trace} se ações $\sigma$ e o \textit{trace} deôntico $\sigma_d$ satisfazem o contrato $\mathcal{C}$.
+%    \end{itemize}
+%    
+%    \quad
+%    
+%    \centering
+%    $\sigma,\sigma_d \models _{i\curvearrowright j}O_\mathcal{C}(\alpha)$ se {\color{purple}$_{i\curvearrowright j}O_{\alpha}\in\sigma_d(0)$} e \\
+%    ({\color{blue}$(\exists \varphi \in \sigma(0) \mid \varphi = \langle i, \alpha, j \rangle \mbox{ e } \sigma(1\dots),\sigma_d(1\dots) \models \top)$} \\
+%    ou  {\color{red} $(\sigma(1\dots),\sigma_d(1\dots) \models \mathcal{C})$ })
+%\end{frame}
+
+
+\subsection{Semântica Relativizada}
+    \begin{frame}{Semântica Relativizada da $\mathcal{CL}$}
+        \begin{itemize}
+            \item A semântica proposta para a nova sintaxe é baseada em \textit{traces} que representam as ações executadas no contrato.
+        \end{itemize}
+        \begin{block}{Ação Relativizada}
+            \begin{itemize}
+                \item Uma tupla $a_r = \langle\kappa,\chi,\lambda\rangle \mid \kappa,\lambda \in \mathcal{I}$ e $\chi \in \mathcal{A_B}$
+                \item Ações relativizadas: $\mathcal{A}_r = \{\mathcal{I} \times \mathcal{A_B} \times \mathcal{I}\}$\\
+            \end{itemize}
+        \end{block}
+        \begin{itemize}
+            \item Representações deônticas: $\mathcal{M} = \{_rd_\alpha \mid r\in \mathcal{R}, d \in \mathcal{D}, \alpha \in \mathcal{A_B} \}$
+            \item A semântica é baseada em dois \textit{traces}:
+            \begin{enumerate}
+                \item \textit{trace} de ações: denotado por $\sigma: \mathbb{N} \to \mathcal{A}^2_r$
+                \item \textit{trace} deôntico: denotado por $\sigma_d: \mathbb{N} \to 2^\mathcal{M}$
+            \end{enumerate}
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Semântica Relativizada da $\mathcal{CL}$ - \textit{Traces}}
+        \begin{enumerate}
+            \item A modalidade global $O(\alpha)$ gera $\sigma(0) \subseteq \{\langle x ,\alpha, y\rangle \mid y \in \mathcal{I}, \forall x \in \mathcal{I}\}$.
+            \item A modalidade relativizada $_{i}O(\alpha)$ gera $\sigma(0) \subseteq \{\langle i,\alpha, x\rangle \mid x \in \mathcal{I}\}$.
+            \item A modalidade direcionada $_{i\curvearrowright j}O(\alpha)$ gera $\sigma(0) \subseteq \{\langle i,\alpha,j\rangle \mid i,j \in \mathcal{I}\}$.
+        \end{enumerate}
+        Seja o contrato: $\mathcal{C} =\ _{i \curvearrowright j}O(pagar)\ \wedge\ _{i \curvearrowright j}[pagar]\ _{j \curvearrowright i}O(entregar)$
+        \\$\quad$\\
+        \textbf{Os \textit{traces} que podem satisfazer o contrato são:}
+        \begin{itemize}
+            \item $\sigma = \langle \{(i,pagar,j)\}, \{(j,entregar,i)\}\rangle$
+            \item $\sigma_d = \langle\{_{i\curvearrowright j}O_{pagar} \}, \{_{j\curvearrowright i}O_{entregar} \} \rangle$
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Semântica Relativizada da $\mathcal{CL}$ - Satisfação}
+        \begin{itemize}
+            \item Definir  $\sigma, \sigma_d \models \mathcal{C}$, ou seja, se o \textit{trace} se ações $\sigma$ e o \textit{trace} deôntico $\sigma_d$ satisfazem o contrato $\mathcal{C}$.
+        \end{itemize}
+        
+        {\small 
+            $\sigma,\sigma_d \models O_\mathcal{C}(\alpha)$ se {\color{purple}$O_{\alpha} \in \sigma_d(0) $} e \\
+            ({\color{blue}$(\forall i \in \mathcal{I}, \exists \varphi \in \sigma(0), x \in \mathcal{I} \mid \varphi = \langle i, \alpha, x\rangle \mbox{ e } \sigma(1\dots),\sigma_d(1\dots) \models \top)$} \\
+            ou  {\color{red} $(\sigma(1\dots),\sigma_d(1\dots) \models \mathcal{C})$})
+            \\\quad\\
+            $\sigma,\sigma_d \models _iO_\mathcal{C}(\alpha)$ se {\color{purple}$_iO_{\alpha}\in\sigma_d(0) $} e \\
+            ({\color{blue}$(\exists \varphi \in \sigma(0), x\in \mathcal{I} \mid \varphi = \langle i,\alpha,x\rangle  \mbox{ e } \sigma(1\dots),\sigma_d(1\dots) \models \top)$} \\
+            ou  {\color{red} $(\sigma(1\dots),\sigma_d(1\dots) \models \mathcal{C})$ })
+            \\\quad\\
+            $\sigma,\sigma_d \models _{i\curvearrowright j}O_\mathcal{C}(\alpha)$ se {\color{purple}$_{i\curvearrowright j}O_{\alpha}\in\sigma_d(0)$} e \\
+            ({\color{blue}$(\exists \varphi \in \sigma(0) \mid \varphi = \langle i, \alpha, j \rangle \mbox{ e } \sigma(1\dots),\sigma_d(1\dots) \models \top)$} \\
+            ou  {\color{red} $(\sigma(1\dots),\sigma_d(1\dots) \models \mathcal{C})$ })
+        }
+    \end{frame}
+    
+\subsection{Construção do Autômato}    
+    \begin{frame}{Construção do autômato}
+        \begin{block}{Visão Geral}
+            O processo de detecção de conflitos proposto consiste na construção do autômato que representa os \textit{traces} que satisfazem o contrato.
+        \end{block}
+        \centering$\mathcal{A}(\mathcal{C})= \langle S, \mathcal{A}^2_r, \mathcal{M}, \mathcal{I}, s_0, T, V, l, \delta \rangle$
+        
+        \begin{itemize}
+            \item $S$: conjunto de estados do autômato;
+            \item $\mathcal{A}^2_r$: conjunto de ações relativizadas concorrentes;
+            \item $\mathcal{M}$: conjunto de rótulos deônticos;
+            \item $\mathcal{I}$: conjunto de indivíduos;
+            \item $s_0$: estado inicial;
+            \item $T \subseteq S \times \mathcal{A}^2_r \times S$: relação de transições rotuladas;
+            \item $V$: estado de violação do contrato;
+            \item $l : S \to \mathcal{C}$ rotula os estados com contratos decompostos; e
+            \item  $\delta: S \to 2^{\mathcal{M}}$ rotula os estados com informações deônticas.
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}{Algoritmo de construção do Autômato}
+        \centering\scalebox{.7}{
+            \begin{algorithm}[H]
+                \SetKwFunction{construirAutomato}{construirAutomato}
+                \SetKwFunction{buscarConflitos}{buscarConflitos}
+                \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+                \uIf{\buscarConflitos(s)}{
+                    um conflito foi encontrado no estado $s$\;
+                }\uElseIf{$l(s) = \top$}{
+                $T \gets T \cup (s,\top,s)$\;
+            }\uElseIf{$l(s) = \bot$}{
+            $V \gets s$\;
+            $T \gets T \cup (V,\perp,V)$\;
+        }\Else{
+        \For{$\alpha \in \mathcal{A}^2_r$}{
+            $\mathcal{C}'\gets f(l(s),\alpha)$\;
+            \uIf{$\exists s' \in S \mid l(s') = \mathcal{C}'$}{
+                $T \gets T \cup (s,\alpha,s')$\;
+            }\Else{
+            $S \gets S \cup s'$\;
+            $l(s') \gets \mathcal{C}'$\;	
+            $T \gets T \cup (s,\alpha,s')$\;
+            $\delta(s') \gets f_d(\mathcal{C}')$\;
+            \construirAutomato($s'$)\;
+        }
+    }
+}
+\end{algorithm}
+}
+\end{frame}
+
+\subsection{Detecção de Conflitos}
+\begin{frame}{Detecção de Conflitos}
+    Os conflito tratados pelo algoritmo são caracterizados por:
+    \begin{enumerate}
+        \item uma ação entre operadores deônticos de obrigação e proibição;
+        \item uma ação entre operadores deônticos de proibição e permissão;
+        \item ações conflitantes entre operadores de obrigação; 
+        \item ações conflitantes entre permissão e obrigação. 
+    \end{enumerate} 
+    
+    \begin{itemize}
+        \item \textbf{Sem conflitos:} Operadores relativizados associados a uma mesma ação executada por indivíduos distintos: {\color{blue}$_iO(\alpha) \wedge\ _jF(\alpha)$}
+        \item \textbf{Sempre em conflito:} Um operador global deôntico de obrigação sempre está em conflito com os operadores relativizados de proibição: {\color{red}$O(\alpha) \wedge\ _iF(\alpha)$}
+        $$O(\alpha) \iff \forall x \in \mathcal{I}, \ _xO_\mathcal{C}(\alpha) \wedge\ _iF(\alpha)$$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Relação de Conflito}
+    A relação de conflito é denotada por $\# \subseteq \mathcal{A}_r \times  \mathcal{A}_r$
+    \begin{itemize}
+        \item Determina que duas ações relativizadas não podem ocorrer ao mesmo tempo.
+        \item Possui duas formas: 
+        \begin{enumerate}
+            \item \textbf{relação de conflito global}, denotada por $\#_g \subseteq \mathcal{A_B} \times \mathcal{A_B}$, indica que as duas ações não podem ocorrer ao mesmo tempo independente do indivíduo executor. 
+            $$\alpha\#_g\ \beta \iff \forall i,j \in \mathcal{I}, \langle i, \alpha, x\rangle \# \langle j, \beta, y\rangle \text{ com } x,y \in \mathcal{I}$$
+            
+            \item \textbf{relação de conflito relativizada}, denotada por $\#_r \subseteq \mathcal{A_B} \times \mathcal{A_B}$, indica que as duas ações não podem ser executadas ao mesmo tempo por um mesmo indivíduo executor.
+            $$\alpha\#_r\ \beta \iff \forall i \in \mathcal{I}, \langle i, \alpha, x\rangle \# \langle i, \beta, y\rangle \text{ com } x,y \in \mathcal{I}$$
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Algoritmo de Busca por Conflitos}
+    \begin{itemize}
+        \item Para cada estado criado pelo algoritmo de construção
+        \item É realizada uma busca por conflitos no contrato resultante
+    \end{itemize}	
+    
+    \centering\scalebox{.6}{
+        \begin{algorithm}[H]
+            \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+            \Input{Um estado $s$ do autômato $\mathcal{A(C)}$}
+            \Output{Uma situação de conflito.}
+            \Begin{
+                \For{$\mathcal{D}\in\delta(s)$}{
+                    \For{$\mathcal{D}' \in \delta(s)-\{\mathcal{D}\}$}{
+                        \If{$\exists d \in \mathcal{D} \mid f_\#(d)\cap \mathcal{D}' \neq \emptyset$}{
+                            \Return Conflito entre $d$ e $f_\#(d)\cap \mathcal{D}'$\;
+                        }
+                    }
+                }
+                \Return Nenhum Conflito\;
+            }
+        \end{algorithm}
+    }
+    \begin{itemize}
+        \item A função $\delta(s)$ retorna os marcadores deônticos do estado $s$
+        \item A função $f_\#(d)$ retorna os marcadores que conflitam com $d$
+    \end{itemize}
+\end{frame}
+
+\subsection{Exemplo}
+\begin{frame}{Exemplo}
+    \begin{block}{Contrato em \CL}
+        $$\mathcal{C} =\ _{i\curvearrowright j}[a]\ _{j_\curvearrowright i}O(b) \wedge \ _{j\curvearrowright i}[b]\ _{j\curvearrowright i}F(b)$$
+    \end{block}
+    
+    \begin{itemize}
+        \item Sejam
+        \begin{itemize}
+            \item Indivíduos: $i$ (cliente) e $j$ (vendedor)
+            \item Ações: $a$ (pagar) e $b$ (entregar o produto)
+        \end{itemize}
+        
+        \begin{block}{Contrato}
+            \begin{itemize}
+                \item Após o \underline{cliente} \textbf{pagar} o \underline{vendedor}, \\ o \underline{vendedor} é obrigado a \textbf{entregar o produto} para o \underline{cliente}
+                \item Após o \underline{vendedor} \textbf{entregar o produto} para o \underline{cliente}, \\ o \underline{vendedor} é proibido \textbf{entregar o produto} para o \underline{cliente}
+            \end{itemize}
+        \end{block}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplo - Fenech x Proposta}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Método de Fenech}
+                {\small$\mathcal{C} = [a]O(b) \wedge [b]F(b)$}
+                
+                \quad
+                
+                Após ({\color{red}alguém}) \textbf{pagar} ({\color{red}quem?}), é obrigado \textbf{entregar} ({\color{red}quem entrega para quem?}).
+                
+                \quad
+                
+                \quad
+                
+                Após ({\color{red}alguém}) \textbf{entregar}, é proibido ({\color{red}alguém}) \textbf{entregar}.
+                
+                \quad
+                
+                \quad
+                
+                \quad
+                
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Método Proposto}
+                {\small $\mathcal{C} =\ _{i\curvearrowright j}[a]\ _{j_\curvearrowright i}O(b) \wedge \ _{j\curvearrowright i}[b]\ _{j\curvearrowright i}F(b)$}
+                
+                \quad
+                
+                Após o \underline{cliente} \textbf{pagar} o \underline{vendedor}, \\ o \underline{vendedor} é obrigado a \textbf{entregar} para o \underline{cliente}.
+                
+                \quad
+                
+                \quad
+                
+                Após o \underline{vendedor} \textbf{entregar} para o \underline{cliente}, \\ o \underline{vendedor} é proibido \textbf{entregar} para o \underline{cliente}.
+                
+                \quad
+                
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Exemplo - Aplicação}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.6\textwidth}
+            \scalebox{.6}{
+                \begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=4cm,initial text={},semithick]
+                \tikzstyle{every state}=[text=black]
+                \tikzstyle{conflict}=[draw=black!100,fill=black!20,text=black]
+                \tikzstyle{conflict-label}=[draw=black!100,fill=black!10,text=black]
+                \tikzstyle{contract}=[fill = gray!20, shape = rectangle, rounded corners, font = \sffamily]
+                
+                \node[initial,state] 		   (s_0)          	{$s_0$};
+                \node[contract] at (0,1) (s_0-cl)	{{\small $\ _{i\curvearrowright j}[a]\ _{j\curvearrowright i}O(b) \wedge \ _{j \curvearrowright i}[b]\ _{j\curvearrowright i}F(b)$}};
+                
+                \node[state]         (s_1) [below left of=s_0] 	{$s_1$};
+                \node[contract] at (-4.5,-2.5) (s_1-cl)	{{\small $\ _{j\curvearrowright i}O(b)$}};
+                \node[state]         (s_2) [below  of=s_0] 	{$s_2$};
+                \node[contract] at (1.5,-4.1) (s_2-cl)	{{\small $\ _{j\curvearrowright i}F(b)$}};
+                \node[state, conflict]         (s_3) [right of=s_2] 	{$s_3$};
+                \node[contract, conflict-label] at (4,-5) (s_3-cl)	{\textbf{{\small $\ _{j\curvearrowright i}O(b)\wedge\ _{j\curvearrowright i}F(b) $}}};  
+                
+                \node[state] (s_4) [below left of=s_1,yshift=-2cm] 	{$s_4$};
+                \node[contract] at (-7,-8) (s_4-cl)	{$SAT$};  
+                \node[state] (s_5) [below right of=s_2,yshift=-2cm] 	{$s_5$};
+                \node[contract] at (4,-9) (s_5-cl)	{$V$};
+                
+                \path (s_0)	edge	[bend right] 	node[left] 								{{\tiny 1,5,6,11}} (s_1);
+                \path (s_0)	edge	 			 	node[right] 							{{\tiny 4,9,10,14}} (s_2);
+                \path (s_0)	edge	[bend left] 	node	 								{{\tiny 7,12,14,15}} (s_3);
+                \path (s_0)	edge					node[right,xshift=-0.5cm,yshift=-1cm]	{{\tiny 2,3,8}} (s_4);  
+                \path (s_1)	edge	[bend right] 	node[left]								{{\tiny 4,7,9,10,12,13,14,15}} (s_4);
+                \path (s_1)	edge	[bend right] 	node[right,xshift=0.2cm]	{{\tiny 1,2,3,5,6,8,11}} (s_5);  
+                \path (s_2)	edge	[bend left] 	node[right,xshift=-1cm,yshift=-0.7cm]				{{\tiny 1,5,6,7,11,12,13,15}} (s_4);
+                \path (s_2)	edge			 	node[right,yshift=-0.5cm,xshift=0.2cm]	{{\tiny 2,3,4,8,9,10,14}} (s_5);
+                \end{tikzpicture}
+            }
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{table}[H]
+                \centering \tiny{
+                    \begin{tabular}{|p{1pt}|l|}
+                        \hline \textbf{N} & \textbf{Ações Concorrentes} \\
+                        \hline $1$ & $(i,a,j)$\\ 
+                        \hline $2$ & $(i,b,j)$\\ 
+                        \hline $3$ & $(j,a,i)$\\ 
+                        \hline $4$ & $(j,b,i)$\\
+                        \hline $5$ & $(i,a,j)\times(i,b,j)$\\ 
+                        \hline $6$ & $(i,a,j)\times(j,a,i)$\\ 
+                        \hline $7$ & $(i,a,j)\times(j,b,i)$\\ 
+                        \hline $8$ & $(i,b,j)\times(j,a,i)$\\ 
+                        \hline $9$ & $(i,b,j)\times(j,b,i)$\\ 
+                        \hline $10$ & $(j,a,i)\times(j,b,i)$\\ 
+                        \hline $11$ & $(i,a,j)\times(i,b,j)\times(j,a,i)$\\ 
+                        \hline $12$ & $(i,a,j)\times(i,b,j)\times(j,b,i)$\\ 
+                        \hline $13$ & $(i,a,j)\times(j,a,i)\times(j,b,i)$\\ 
+                        \hline $14$ & $(i,b,j)\times(j,a,i)\times(j,b,i)$\\ 
+                        \hline $15$ & $(i,a,j)\times(i,b,j)\times$\\&$(j,a,i)\times(j,b,i)$\\
+                        \hline
+                    \end{tabular}
+                }
+            \end{table}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Exemplo: Proposta x Fenech}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.55\textwidth}
+            \centering \small \textbf{Método Proposto}
+            \scalebox{.5}{
+                \begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=4cm,initial text={},semithick]
+                \tikzstyle{every state}=[text=black]
+                \tikzstyle{conflict}=[draw=black!100,fill=black!90,text=white]
+                \tikzstyle{conflict-label}=[draw=black!100,fill=black!60,text=white]
+                \tikzstyle{contract}=[fill = gray!20, shape = rectangle, rounded corners, font = \sffamily]
+                
+                \node[initial,state] 		   (s_0)          	{$s_0$};
+                \node[contract] at (0,1) (s_0-cl)	{{\small $\ _{i\curvearrowright j}[a]\ _{j\curvearrowright i}O(b) \wedge \ _{j \curvearrowright i}[b]\ _{j\curvearrowright i}F(b)$}};
+                
+                \node[state]         (s_1) [below left of=s_0] 	{$s_1$};
+                \node[contract] at (-4.5,-2.5) (s_1-cl)	{{\small $\ _{j\curvearrowright i}O(b)$}};
+                \node[state]         (s_2) [below  of=s_0] 	{$s_2$};
+                \node[contract] at (1.5,-4.1) (s_2-cl)	{{\small $\ _{j\curvearrowright i}F(b)$}};
+                \node[state, conflict]         (s_3) [right of=s_2] 	{$s_3$};
+                \node[contract, conflict-label] at (4,-5) (s_3-cl)	{\textbf{{\small $\ _{j\curvearrowright i}O(b)\wedge\ _{j\curvearrowright i}F(b) $}}};  
+                
+                \node[state] (s_4) [below left of=s_1,yshift=-2cm] 	{$s_4$};
+                \node[contract] at (-7,-8) (s_4-cl)	{$SAT$};  
+                \node[state] (s_5) [below right of=s_2,yshift=-2cm] 	{$s_5$};
+                \node[contract] at (4,-9) (s_5-cl)	{$V$};
+                
+                \path (s_0)	edge	[bend right] 	node[left] 								{{\tiny 1,5,6,11}} (s_1);
+                \path (s_0)	edge	 			 	node[right] 							{{\tiny 4,9,10,14}} (s_2);
+                \path (s_0)	edge	[bend left] 	node	 								{{\tiny 7,12,14,15}} (s_3);
+                \path (s_0)	edge					node[right,xshift=-0.5cm,yshift=-1cm]	{{\tiny 2,3,8}} (s_4);  
+                \path (s_1)	edge	[bend right] 	node[left]								{{\tiny 4,7,9,10,12,13,14,15}} (s_4);
+                \path (s_1)	edge	[bend right] 	node[right,xshift=0.2cm]	{{\tiny 1,2,3,5,6,8,11}} (s_5);  
+                \path (s_2)	edge	[bend left] 	node[right,xshift=-1cm,yshift=-0.7cm]				{{\tiny 1,5,6,7,11,12,13,15}} (s_4);
+                \path (s_2)	edge			 	node[right,yshift=-0.5cm,xshift=0.2cm]	{{\tiny 2,3,4,8,9,10,14}} (s_5);
+                \end{tikzpicture}
+            }
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \centering \small \textbf{Método de Fenech}
+            \begin{figure}[ht]
+                \centering
+                \includegraphics[width=5cm]{./figuras/exemplo}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%\begin{frame}{Exemplo de Construção}
+%    
+%    \begin{columns}[onlytextwidth]
+%        \begin{column}{0.6\textwidth}
+%            \scalebox{.6}{
+%                \begin{tikzpicture}[->,>=stealth,shorten >=1pt,auto,node distance=4cm,initial text={},semithick]
+%                \tikzstyle{every state}=[text=black]
+%                \tikzstyle{conflict}=[draw=black!100,fill=black!90,text=white]
+%                \tikzstyle{conflict-label}=[draw=black!100,fill=black!60,text=white]
+%                \tikzstyle{contract}=[fill = gray!20, shape = rectangle, rounded corners, font = \sffamily]
+%                
+%                \node[initial,state] 		   (s_0)          	{$s_0$};
+%                \node[contract] at (0,1) (s_0-cl)	{{\small $\ _{i\curvearrowright j}[a]\ _{j\curvearrowright i}O(b) \wedge \ _{j \curvearrowright i}[b]\ _{j\curvearrowright i}F(b)$}};
+%                
+%                \node[state]         (s_1) [below left of=s_0] 	{$s_1$};
+%                \node[contract] at (-4.5,-2.5) (s_1-cl)	{{\small $\ _{j\curvearrowright i}O(b)$}};
+%                \node[state]         (s_2) [below  of=s_0] 	{$s_2$};
+%                \node[contract] at (1.5,-4.1) (s_2-cl)	{{\small $\ _{j\curvearrowright i}F(b)$}};
+%                \node[state, conflict]         (s_3) [right of=s_2] 	{$s_3$};
+%                \node[contract, conflict-label] at (4,-5) (s_3-cl)	{\textbf{{\small $\ _{j\curvearrowright i}O(b)\wedge\ _{j\curvearrowright i}F(b) $}}};  
+%                
+%                \node[state] (s_4) [below left of=s_1,yshift=-2cm] 	{$s_4$};
+%                \node[contract] at (-7,-8) (s_4-cl)	{$SAT$};  
+%                \node[state] (s_5) [below right of=s_2,yshift=-2cm] 	{$s_5$};
+%                \node[contract] at (4,-9) (s_5-cl)	{$V$};
+%                
+%                \path (s_0)	edge	[bend right] 	node[left] 								{{\tiny 1,5,6,11}} (s_1);
+%                \path (s_0)	edge	 			 	node[right] 							{{\tiny 4,9,10,14}} (s_2);
+%                \path (s_0)	edge	[bend left] 	node	 								{{\tiny 7,12,14,15}} (s_3);
+%                \path (s_0)	edge					node[right,xshift=-0.5cm,yshift=-1cm]	{{\tiny 2,3,8}} (s_4);  
+%                \path (s_1)	edge	[bend right] 	node[left]								{{\tiny 4,7,9,10,12,13,14,15}} (s_4);
+%                \path (s_1)	edge	[bend right] 	node[right,xshift=0.2cm]	{{\tiny 1,2,3,5,6,8,11}} (s_5);  
+%                \path (s_2)	edge	[bend left] 	node[right,xshift=-1cm,yshift=-0.7cm]				{{\tiny 1,5,6,7,11,12,13,15}} (s_4);
+%                \path (s_2)	edge			 	node[right,yshift=-0.5cm,xshift=0.2cm]	{{\tiny 2,3,4,8,9,10,14}} (s_5);
+%                \end{tikzpicture}
+%            }
+%        \end{column}
+%        \begin{column}{0.3\textwidth}
+%            \begin{table}[H]
+%                \centering \tiny{
+%                    \begin{tabular}{|p{1pt}|l|}
+%                        \hline \textbf{N} & \textbf{Ações Concorrentes} \\
+%                        \hline $1$ & $(i,a,j)$\\ 
+%                        \hline $2$ & $(i,b,j)$\\ 
+%                        \hline $3$ & $(j,a,i)$\\ 
+%                        \hline $4$ & $(j,b,i)$\\
+%                        \hline $5$ & $(i,a,j)\times(i,b,j)$\\ 
+%                        \hline $6$ & $(i,a,j)\times(j,a,i)$\\ 
+%                        \hline $7$ & $(i,a,j)\times(j,b,i)$\\ 
+%                        \hline $8$ & $(i,b,j)\times(j,a,i)$\\ 
+%                        \hline $9$ & $(i,b,j)\times(j,b,i)$\\ 
+%                        \hline $10$ & $(j,a,i)\times(j,b,i)$\\ 
+%                        \hline $11$ & $(i,a,j)\times(i,b,j)\times(j,a,i)$\\ 
+%                        \hline $12$ & $(i,a,j)\times(i,b,j)\times(j,b,i)$\\ 
+%                        \hline $13$ & $(i,a,j)\times(j,a,i)\times(j,b,i)$\\ 
+%                        \hline $14$ & $(i,b,j)\times(j,a,i)\times(j,b,i)$\\ 
+%                        \hline $15$ & $(i,a,j)\times(i,b,j)\times$\\&$(j,a,i)\times(j,b,i)$\\
+%                        \hline
+%                    \end{tabular}
+%                }
+%            \end{table}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+
+\subsection{Desenvolvimento}
+
+\begin{frame}{Desenvolvimento}
+    A ferramenta foi desenvolvida em Java com suporte das seguintes bibliotecas:
+    \begin{itemize}
+        \item \textit{\textbf{ANTLR}} para gear o parser de \RCL
+        \item \textit{\textbf{Apache Commons CLI}} para interpretar os parâmetros de linha de comando e configurar a ferramenta
+        \item \textit{\textbf{Guava} (Google's collections library)} para otimizar as operações sobre conjuntos utilizadas nos algoritmos
+        \item \textit{\textbf{Graphviz}} para a visualização do autômato gerado
+    \end{itemize}
+\end{frame}
+
+\subsection{Estratégias de Otimização}
+
+\begin{frame}{Otimização na construção do autômato}
+    No processo de construção são obtidos os indivíduos, $\mathcal{I}$, e as ações básicas, $\mathcal{A_B}$. 
+    \begin{itemize}
+        \item Ações relativizadas $\mathcal{A}_r = \mathcal{I}\times\mathcal{A_B}\times\mathcal{I}$
+        \item O número de ações relativizadas cresce de acordo com o número de ações e indivíduos. 
+        \item Em um contrato com $|\mathcal{I}|=4$ e $|\mathcal{A_B}|=3$
+        \item O conjunto de ações relativizadas é $|\mathcal{A}_r|=48$ e o conjunto de ações concorrentes é $|\mathcal{A}_r^2|=2^{48}-1$. 
+    \end{itemize}
+    
+    Para reduzir o problema explosão, são analisadas apenas as ações relacionadas com o contrato corrente.
+    $$\ {\color{purple} _{i\curvearrowright j}[a]} {\color{blue} _{j\curvearrowright i}O(b)} \wedge \ {\color{purple} _{j\curvearrowright i}[b]} {\color{blue}  _{j\curvearrowright i}F(b)} \wedge \ {\color{purple} _{k}F(c)}$$
+    $${\color{purple} (i,a,j), (j,b,i), (k,c,i), (k,c,j)}$$
+\end{frame}
+
+
+\begin{frame}{Estratégias de Otimização - Ordenação}
+    \textbf{Ordenação das ações nas decomposições}
+    \begin{enumerate}
+        \item A combinação de contratos pode aumentar a incidência de conflitos
+        \item Avaliar a ação concorrente com maior número de ações relativizadas
+        \item Aumento da possibilidade de decompor o contrato
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Estratégias de Otimização - Poda de ações}
+    \textbf{Poda de ações relativizadas desnecessárias}
+    \begin{itemize}
+        \item $\mathcal{A}_r = \mathcal{I}\times\mathcal{A_B}\times\mathcal{I}$
+        \item Crescimento de acordo com o número de ações e indivíduos
+        \item Para $|\mathcal{I}|=4$ e $|\mathcal{A_B}|=3$ resulta em $|\mathcal{A}_r|=48$ e $|\mathcal{A}_r^2|=2^{48}-1$. 
+    \end{itemize}
+    
+    Analisar apenas as ações relacionadas com o contrato corrente.
+    
+    $$\ {\color{purple} _{i\curvearrowright j}[a]} {\color{blue} _{j\curvearrowright i}O(b)} \wedge \ {\color{purple} _{j\curvearrowright i}[b]} {\color{blue}  _{j\curvearrowright i}F(b)} \wedge \ {\color{purple} _{k}F(c)}$$
+    $${\color{purple} (i,a,j), (j,b,i), (k,c,i), (k,c,j)}$$
+\end{frame}
+
+\begin{frame}{Estratégias de Otimização - Poda de indivíduos}
+    \textbf{Poda de indivíduos irrelevantes}
+    \begin{itemize}
+        \item Impacto na eficiência: operadores globais
+        \item $\mathcal{C}_1 = O(\alpha) \wedge\ _{i\curvearrowright j}F(\beta)$ equivale a $\bigwedge_{i\in\mathcal{I}} \ _iO(\alpha) \wedge\ _{i_\curvearrowright j}F(\beta)$
+    \end{itemize}
+    
+    
+    Considerar apenas os indivíduos presentes no contrato corrente.
+    
+    
+\end{frame}
+
+
+
+\begin{frame}{Utilização da Ferramenta RECALL}
+    \begin{itemize}
+        \item A ferramenta analisa contratos descritos na linguagem \RCL.
+        \item O arquivo de contrato possui duas partes: conflitos pré-definidos e cláusulas do contrato.
+    \end{itemize}
+    
+    \begin{block}{Exemplo}
+        \begin{semiverbatim}
+            conflict \{
+            
+            \ \ global \{(abrir, fechar)\};
+            
+            \ \ relativized \{(beber, dirigir),(subir, descer)\};
+            
+            \};
+            
+            [e](\{j,k\}O(f) \textasciicircum \ P(a));
+            
+            \{j,i\}F(c) \_/\{j\}O(d)/\_;
+        \end{semiverbatim}
+    \end{block}
+    
+\end{frame}
